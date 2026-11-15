@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WISC-V · Calificación</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0e5a6b">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--ink:#17252d;--mut:#5d6e76;--bg:#eef2f3;--card:#fff;--acc:#0e5a6b;--line:#d5dde0;--r:#c0392b;--y:#f3d36b;--g:#2e9e5b;--b:#2b8fd6;--ok:#d9f0e2;--sf:env(safe-area-inset-top,0px)}
+@media(prefers-color-scheme:dark){:root{--ink:#e8eef0;--mut:#9fb1b8;--bg:#10181c;--card:#18242a;--line:#2c3c44;--acc:#5fb8cc}}
+*{box-sizing:border-box}html,body{margin:0}
+body{font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);padding-top:var(--sf);padding-bottom:env(safe-area-inset-bottom,0)}
+header{background:var(--acc);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:var(--sf);z-index:5;margin-top:calc(-1*var(--sf));padding-top:calc(12px + var(--sf))}
+@media(prefers-color-scheme:dark){header{color:#0b1418}}
+h1{font:700 1.25rem Georgia,"Times New Roman",serif;margin:0;flex:1}h1 small{display:block;font:400 .78rem system-ui;opacity:.85}
+h2{font:700 1.1rem Georgia,serif;margin:0 0 10px}
+button,.btn{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 12px;cursor:pointer}
+header button{background:transparent;color:inherit;border-color:currentColor}
+button.p{background:var(--acc);color:#fff;border-color:var(--acc)}button:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+nav{display:flex;gap:4px;padding:8px 8px 0;max-width:820px;margin:auto;overflow-x:auto}
+nav button{border-radius:8px 8px 0 0;border-bottom:0;flex:1;white-space:nowrap}nav button[aria-selected=true]{background:var(--card);font-weight:700;color:var(--acc)}
+main{max-width:820px;margin:auto;padding:0 8px 40px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:0 0 10px 10px;padding:16px}
+.panel[hidden]{display:none}
+label{display:block;font-size:.85rem;color:var(--mut);margin:10px 0 3px}
+input,textarea{font:inherit;width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+input:invalid{border-color:var(--r)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}@media(max-width:520px){.grid2{grid-template-columns:1fr}}
+.edad{margin-top:12px;padding:10px 12px;border-radius:8px;background:var(--bg);font-weight:600}
+.msg{color:var(--mut);font-size:.9rem;margin:10px 0}
+table{width:100%;border-collapse:collapse;font-size:.95rem}th{font-weight:600;color:var(--mut);text-align:left;font-size:.8rem;padding:4px 6px}
+td{padding:5px 6px;border-top:1px solid var(--line);vertical-align:middle}td input{width:76px;text-align:center;padding:6px}
+.num{text-align:center}.tag{display:inline-block;min-width:2.2em;text-align:center;border-radius:6px;padding:2px 8px;font-weight:600;font-size:.85rem}
+.r{background:var(--r);color:#fff}.y{background:var(--y);color:#3a2f00}.g{background:var(--g);color:#fff}.b{background:var(--b);color:#fff}.n{background:var(--bg);color:var(--mut)}
+.pos{color:var(--g);font-weight:600}.neg{color:var(--r);font-weight:600}
+.ix{font-size:.72rem;color:var(--mut);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:6px}
+.opt td:first-child{color:var(--mut)}
+.tot{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:14px}.tot div{background:var(--bg);border-radius:8px;padding:8px 4px;text-align:center}
+.tot b{display:block;font-size:1.4rem}.tot span{font-size:.75rem;color:var(--mut)}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin:12px 0}
+svg{width:100%;height:auto;background:var(--bg);border-radius:8px}.ct{font:700 12px system-ui;fill:var(--ink)}.ax{font:9px system-ui;fill:var(--mut)}.gl{stroke:var(--line)}.rf{stroke:var(--mut);stroke-dasharray:4 3}.ln{stroke:var(--acc);fill:none;stroke-width:2.5}.dt{fill:var(--acc)}.vl{font:700 10px system-ui;fill:var(--ink)}
+details{margin-top:14px;font-size:.9rem;color:var(--mut)}summary{cursor:pointer;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);max-width:520px;width:92%}
+.row{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line)}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sum{display:none}
+@media print{header,nav,.noprint{display:none}.panel[hidden]{display:block}.panel{border:0;padding:0 0 12px;break-inside:avoid}.sum{display:block;margin-bottom:8px}body{background:#fff;color:#000}svg{background:#fff}}
+</style><style>
+:root{--ink:#f2f6f7;--mut:#a9b7bd;--bg:rgba(255,255,255,.07);--card:rgba(255,255,255,.06);--acc:#5fd0d0;--line:rgba(255,255,255,.18);color-scheme:dark}
+html{background:#030407}
+body{background:radial-gradient(60% 50% at 8% 85%,rgba(214,60,40,.35),transparent 70%),radial-gradient(55% 45% at 95% 20%,rgba(190,60,220,.35),transparent 70%),radial-gradient(40% 35% at 50% 45%,rgba(30,140,140,.22),transparent 70%),#030407;background-attachment:fixed;min-height:100vh}
+#waves{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+h1,h2{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-weight:500;letter-spacing:.06em}
+header{background:rgba(10,12,16,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--ink);border-bottom:1px solid var(--line)}
+header button{border-radius:999px}
+button,.btn{background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.28);border-radius:999px;color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+button.p{background:linear-gradient(180deg,#2a9ea3,#146a70);border-color:rgba(160,255,255,.4);color:#fff}
+nav button{border-radius:14px 14px 0 0;background:transparent;box-shadow:none;border:1px solid transparent}
+nav button[aria-selected=true]{background:var(--card);border-color:var(--line);color:var(--acc)}
+.panel,dialog{background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.03));backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:22px;box-shadow:0 10px 40px rgba(0,0,0,.45)}
+nav+main .panel{border-top-left-radius:22px}
+input,textarea{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.28);border-radius:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+svg{background:rgba(255,255,255,.04)}
+.edad,.tot div{background:rgba(255,255,255,.07)}
+.opt td:first-child{color:var(--mut)}
+body.locked header,body.locked nav,body.locked main{display:none}
+#login{display:none;min-height:100vh;align-items:center;justify-content:center;padding:16px}
+body.locked #login{display:flex}
+.disc{width:min(92vw,440px);aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 14%;background:radial-gradient(circle at 60% 55%,rgba(30,150,150,.35),transparent 55%),linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.04));backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.22);box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.disc h2{align-self:flex-start;font-size:1.15rem;margin:0 0 12px}
+.disc form{width:100%;display:flex;flex-direction:column;gap:10px;align-items:center}
+.fld{position:relative;width:100%}.fld input{padding-right:42px}.fld svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:20px;height:20px;fill:#fff;background:none;border-radius:0}
+.disc .rm{display:flex;align-items:center;gap:6px;font-size:.8rem;color:var(--mut);margin:2px 0}.disc .rm input{width:auto}
+#lerr{color:#ff8a80;font-size:.82rem;min-height:1.1em;margin:0}
+@media print{:root{--ink:#000;--mut:#444;--line:#ccc;--bg:#fff;--card:#fff;--acc:#0e5a6b}html,body{background:#fff!important}#waves,#login{display:none!important}.panel{background:#fff;box-shadow:none;backdrop-filter:none}svg{background:#fff}}
+</style></head><body class="locked"><svg id="waves" aria-hidden="true"></svg>
+<div id="login"><div class="disc"><h2>WISC-V<small style="display:block;font-size:.7rem;font-weight:400;letter-spacing:.03em;color:var(--mut);margin-top:3px">Escala de Inteligencia de Wechsler para Niños<br>Iniciar sesión</small></h2><form id="lf" autocomplete="on"><div class="fld"><input id="lu" placeholder="Usuario" autocomplete="username" aria-label="Usuario"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.5"/><path d="M3 21c0-5 4-8 9-8s9 3 9 8z"/></svg></div><div class="fld"><input id="lp" type="password" placeholder="Contraseña" autocomplete="current-password" aria-label="Contraseña"><svg viewBox="0 0 24 24"><path d="M6 10V8a6 6 0 0112 0v2h1v12H5V10zm2 0h8V8a4 4 0 00-8 0z"/></svg></div><label class="rm"><input type="checkbox" id="lr" checked> Recordarme en este dispositivo</label><p id="lerr" role="alert"></p><button class="p" type="submit">Entrar</button></form></div></div>
+<header><h1>WISC-V<small id="who">Nueva evaluación</small></h1><button id="bMenu">Evaluaciones</button><button id="bOut">Salir</button></header>
+<nav role="tablist" id="tabs"></nav>
+<main>
+<section class="panel" id="p0" role="tabpanel">
+<h2>Datos generales</h2>
+<label for="g_nombre">Nombre</label><input id="g_nombre" autocomplete="off">
+<label for="g_examinador">Examinador</label><input id="g_examinador" autocomplete="off">
+<div class="grid2"><div><label for="g_fn">Fecha de nacimiento</label><input type="date" id="g_fn"></div><div><label for="g_fa">Fecha de aplicación</label><input type="date" id="g_fa"></div></div>
+<div class="edad" id="edad">Edad cronológica: —</div>
+<div class="grid2"><div><label for="g_esc">Escolaridad (opcional)</label><input id="g_esc"></div><div><label for="g_mot">Motivo de evaluación (opcional)</label><input id="g_mot"></div></div>
+<p class="msg" id="gmsg"></p>
+<div class="acts noprint"><button class="p" id="bGo">Comenzar calificación</button></div>
+<details><summary>Instrucciones de uso</summary><ol>
+<li>Captura primero los datos generales; la calificación se habilita al completar nombre y fechas.</li>
+<li>Anota la puntuación escalar de cada subprueba; las sumas por índice se calculan solas.</li>
+<li>Solo se suman las subpruebas obligatorias. No sirve si se sustituyó alguna por una opcional.</li>
+<li>Las desviaciones respecto a la media (10) se marcan en rojo si son negativas y en verde si son positivas.</li>
+<li>Las puntuaciones compuestas se introducen manualmente según las tablas de baremación del manual.</li>
+<li>Los percentiles son orientativos (curva normal, media 100, DE 15). Verifica con el manual.</li>
+<li>Las gráficas y las agrupaciones opcionales están en la pestaña Perfil.</li>
+<li>Uso bajo responsabilidad de cada profesional. Los datos se guardan solo en este dispositivo.</li></ol></details>
+</section>
+<section class="panel" id="p1" role="tabpanel" hidden>
+<h2>Puntuaciones escalares</h2>
+<table><thead><tr><th>Subprueba</th><th class="num">P. escalar</th><th class="num">Nivel</th><th class="num">Dif. vs 10</th></tr></thead><tbody id="sb"></tbody></table>
+<div class="tot" id="tot"></div>
+<p class="msg">Las filas en gris son opcionales: no entran en las sumas, solo en las agrupaciones del Perfil. Una marca ◆ señala puntuaciones extremas (≤4 o ≥14).</p>
+</section>
+<section class="panel" id="p2" role="tabpanel" hidden>
+<h2>Puntuaciones compuestas</h2>
+<p class="msg">Busca la suma de escalares en la tabla del manual e introduce la puntuación compuesta.</p>
+<table><thead><tr><th>Índice</th><th class="num">Suma</th><th class="num">P. comp.</th><th class="num">Percentil</th></tr></thead><tbody id="cp"></tbody></table>
+<div class="acts noprint"><button class="p" id="bFin">Finalizar y generar resultados</button></div><p class="msg" id="fmsg"></p>
+<p class="msg">Color del percentil: rojo por debajo de 50. Color de la compuesta: azul ≥120, verde 90–119, amarillo ≤89.</p>
+</section>
+<section class="panel" id="p3" role="tabpanel" hidden>
+<h2>Perfil</h2><div class="sum" id="sum"></div>
+<div class="charts" id="ch"></div>
+<h2>Interpretabilidad de los índices</h2>
+<p class="msg">Cada índice se considera unitario, y por tanto interpretable, cuando la diferencia entre la mayor y la menor de sus subpruebas es menor de 5 puntos escalares.</p>
+<table><tbody id="un"></tbody></table>
+<h2 style="margin-top:18px">Agrupaciones con subpruebas opcionales</h2>
+<p class="msg">Para valorarlas deben haberse aplicado las pruebas opcionales. Media = 10.</p>
+<table><thead><tr><th>Agrupación</th><th class="num">Punt.</th><th class="num">Desv.</th></tr></thead><tbody id="cl"></tbody></table>
+<div class="acts noprint"><button onclick="print()">Imprimir / guardar PDF</button></div>
+</section>
+<section class="panel" id="p4" role="tabpanel" hidden><h2>Resultados</h2><div id="rep"></div><div class="acts noprint"><button class="p" id="bPdf">Descargar PDF de nuevo</button></div></section>
+</main>
+<dialog id="dlg"><h2>Evaluaciones guardadas</h2><div id="list"></div>
+<div class="acts"><button class="p" id="bNew">Nueva evaluación</button><button id="bExp">Exportar copia</button><label class="btn" style="margin:0;color:var(--ink)">Importar<input type="file" id="bImp" accept=".json" hidden></label><button id="bClose">Cerrar</button></div></dialog>
+<script>
+const SUB=[["CC","Cubos","RP"],["S","Semejanzas","CV"],["D","Dígitos","MT"],["Co","Conceptos","RP"],["CI","Claves","VP"],["V","Vocabulario","CV"],["LN","Letras y números","MT"],["M","Matrices","RP"],["C","Comprensión","CV"],["BS","Búsqueda de símbolos","VP"],["FI","Figuras incompletas","RP",1],["An","Animales","VP",1],["I","Información","CV",1],["A","Aritmética","MT",1],["Ad","Adivinanzas","CV",1]];
+const IDX={CV:"Comprensión Verbal",RP:"Razonamiento Perceptivo",MT:"Memoria de Trabajo",VP:"Velocidad de Procesamiento",CIT:"C.I. Total"};
+const CL=[["Razonamiento Fluido",["Co","M","A"]],["Procesamiento Visual",["CC","FI"]],["Razonamiento Fl. No Verbal",["M","Co"]],["Razonamiento Fl. Verbal",["CC","D","Co"]],["Conocimiento Léxico",["V","Ad"]],["Información General",["C","I"]],["Memoria a Largo Plazo",["V","I"]],["Memoria a Corto Plazo",["D","LN"]]];
+const $=id=>document.getElementById(id),K="wiscv.evals",KC="wiscv.cur";
+const blank=()=>({id:Date.now()+"",g:{},s:{},c:{}});
+let st=blank(),db=JSON.parse(localStorage.getItem(K)||"{}");
+const nv=v=>v===""||v==null||isNaN(v)?null:+v,mem=ix=>SUB.filter(s=>!s[3]&&(ix=="CIT"||s[2]==ix));
+const band=x=>x<=7?"r":x<=9?"y":"g",cband=x=>x>=120?"b":x>=90?"g":"y";
+const cdf=z=>{const t=1/(1+.2316419*Math.abs(z)),p=.3989423*Math.exp(-z*z/2)*t*(.3193815+t*(-.3565638+t*(1.781478+t*(-1.821256+t*1.330274))));return z>0?1-p:p};
+const sg=d=>`<span class="${d<0?"neg":d>0?"pos":""}">${d>0?"+":""}${d.toFixed(2).replace(/\.00$/,"")}</span>`;
+function edad(){const a=st.g.fn,b=st.g.fa;if(!a||!b||b<a)return null;let [y1,m1,d1]=a.split("-").map(Number),[y2,m2,d2]=b.split("-").map(Number);let y=y2-y1,m=m2-m1,d=d2-d1;if(d<0){m--;d+=new Date(y2,m2-1,0).getDate()}if(m<0){y--;m+=12}return[y,m,d]}
+const ok=()=>!!(st.g.nombre&&st.g.nombre.trim()&&edad());
+function chart(t,L,V,min,max,step,ref,H=190){const W=340,l=34,r=10,T=26,B=30,x=i=>l+(L.length<2?(W-l-r)/2:i*(W-l-r)/(L.length-1)),y=v=>T+(max-v)/(max-min)*(H-T-B);let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${t}"><text x="${l}" y="16" class="ct">${t}</text>`;for(let v=min;v<=max;v+=step)s+=`<line class="gl" x1="${l}" x2="${W-r}" y1="${y(v)}" y2="${y(v)}"/><text class="ax" x="${l-4}" y="${y(v)+3}" text-anchor="end">${v}</text>`;s+=`<line class="rf" x1="${l}" x2="${W-r}" y1="${y(ref)}" y2="${y(ref)}"/>`;let d="",pen=0;V.forEach((v,i)=>{if(v==null){pen=0;return}d+=(pen?"L":"M")+x(i)+" "+y(Math.min(max,Math.max(min,v)))+" ";pen=1});s+=`<path class="ln" d="${d}"/>`;V.forEach((v,i)=>{s+=`<text class="ax" x="${x(i)}" y="${H-12}" text-anchor="middle">${L[i]}</text>`;if(v!=null)s+=`<circle class="dt" cx="${x(i)}" cy="${y(Math.min(max,Math.max(min,v)))}" r="3.5"/><text class="vl" x="${x(i)}" y="${y(Math.min(max,Math.max(min,v)))-7}" text-anchor="middle">${v}</text>`});return s+"</svg>"}
+function build(){
+ $("tabs").innerHTML=["Datos","Subpruebas","Compuestas","Perfil","Resultados"].map((n,i)=>`<button role="tab" data-t="${i}" aria-selected="${i==0}">${n}</button>`).join("");
+ $("sb").innerHTML=SUB.map(([k,n,ix,o])=>`<tr class="${o?"opt":""}"><td>${n}<span class="ix">${k} · ${ix}</span></td><td class="num"><input type="number" inputmode="numeric" min="1" max="19" step="1" data-s="${k}" aria-label="${n}"></td><td class="num" id="n_${k}"></td><td class="num" id="d_${k}"></td></tr>`).join("");
+ $("cp").innerHTML=Object.keys(IDX).map(k=>`<tr><td>${IDX[k]}</td><td class="num" id="su_${k}"></td><td class="num"><input type="number" inputmode="numeric" min="40" max="160" step="1" data-c="${k}" aria-label="Compuesta ${IDX[k]}"></td><td class="num" id="pc_${k}"></td></tr>`).join("");
+ $("tot").innerHTML=Object.keys(IDX).map(k=>`<div><span>${k}</span><b id="t_${k}">0</b><span id="tn_${k}"></span></div>`).join("");
+}
+function load(o){st=o;localStorage.setItem(KC,o.id);document.querySelectorAll("[id^=g_]").forEach(e=>e.value=st.g[e.id.slice(2)]||"");document.querySelectorAll("[data-s]").forEach(e=>e.value=st.s[e.dataset.s]??"");document.querySelectorAll("[data-c]").forEach(e=>e.value=st.c[e.dataset.c]??"");calc();tab(ok()&&Object.keys(st.s).length?1:0)}
+function calc(){
+ const g=ok();$("who").textContent=st.g.nombre||"Nueva evaluación";const e=edad();
+ $("edad").textContent="Edad cronológica: "+(e?`${e[0]} años, ${e[1]} meses, ${e[2]} días`:"—");
+ $("gmsg").textContent=g?"Datos completos.":"Para calificar, anota el nombre y las fechas de nacimiento y aplicación (la aplicación no puede ser anterior al nacimiento).";
+ $("bGo").disabled=!g;document.querySelectorAll("#tabs button").forEach((b,i)=>{b.disabled=i>0&&!g});
+ const S={};SUB.forEach(([k])=>S[k]=nv(st.s[k]));
+ SUB.forEach(([k])=>{const v=S[k];$("n_"+k).innerHTML=v==null?"":`<span class="tag ${band(v)}">${v}</span>${v<=4||v>=14?" ◆":""}`;$("d_"+k).innerHTML=v==null?"":sg(v-10)});
+ const T={},V={};Object.keys(IDX).forEach(k=>{const m=mem(k),vs=m.map(s=>S[s[0]]).filter(v=>v!=null);T[k]=vs.reduce((a,b)=>a+b,0);V[k]=vs.length;$("t_"+k).textContent=T[k];$("tn_"+k).textContent=vs.length+"/"+m.length;$("su_"+k).innerHTML=T[k]+(vs.length<m.length?` <span class="ix">incompleta</span>`:"");
+  const c=nv(st.c[k]),p=c==null?null:cdf((c-100)/15)*100;$("pc_"+k).innerHTML=c==null?"—":`<span class="tag ${cband(c)}">${c}</span> <span class="tag ${p<50?"r":"n"}">${p.toFixed(2)}</span>`});
+ const CV=k=>nv(st.c[k]);
+ $("ch").innerHTML=chart("Perfil de puntuaciones compuestas",["CV","RP","MT","VP","CIT"],Object.keys(IDX).map(CV),40,170,10,100,260)+["CV","RP","MT","VP"].map(k=>chart(IDX[k],mem(k).map(s=>s[0]),mem(k).map(s=>S[s[0]]),0,19,1,10)).join("");
+ $("un").innerHTML=Object.keys(IDX).map(k=>{const m=mem(k).map(s=>S[s[0]]);const full=m.every(v=>v!=null);const r=full?Math.max(...m)-Math.min(...m):null;return`<tr><td>${IDX[k]}</td><td class="num">${full?"Rango "+r:"Incompleto"}</td><td class="num">${full?`<span class="tag ${r<5?"g":"y"}">${r<5?"Unitario":"No unitario"}</span>`:""}</td></tr>`}).join("");
+ $("cl").innerHTML=CL.map(([n,ks])=>{const vs=ks.map(k=>S[k]);if(vs.some(v=>v==null))return`<tr><td>${n}</td><td class="num">—</td><td class="num"></td></tr>`;const m=vs.reduce((a,b)=>a+b,0)/vs.length;return`<tr><td>${n}</td><td class="num"><span class="tag ${band(m)}">${m.toFixed(2)}</span>${m<=4||m>=14?" ◆":""}</td><td class="num">${sg(m-10)}</td></tr>`}).join("");
+ $("sum").innerHTML=`<b>${st.g.nombre||""}</b> · Examinador: ${st.g.examinador||"—"} · Aplicación: ${st.g.fa||"—"} · ${$("edad").textContent}`;
+}
+function tab(i){document.querySelectorAll("#tabs button").forEach((b,j)=>b.setAttribute("aria-selected",j==i));[0,1,2,3,4].forEach(j=>$("p"+j).hidden=j!=i);scrollTo(0,0)}
+function save(){if(!Object.keys(st.g).length&&!Object.keys(st.s).length)return;st.upd=Date.now();db[st.id]=st;localStorage.setItem(K,JSON.stringify(db));localStorage.setItem(KC,st.id)}
+document.addEventListener("input",e=>{const t=e.target;if(t.id&&t.id.startsWith("g_"))st.g[t.id.slice(2)]=t.value;else if(t.dataset.s)st.s[t.dataset.s]=t.value;else if(t.dataset.c)st.c[t.dataset.c]=t.value;else return;save();calc()});
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(b&&!b.disabled)tab(+b.dataset.t)};
+$("bGo").onclick=()=>tab(1);$("bMenu").onclick=()=>{list();$("dlg").showModal()};$("bClose").onclick=()=>$("dlg").close();
+$("bNew").onclick=()=>{load(blank());$("dlg").close()};
+function list(){const a=Object.values(db).sort((x,y)=>y.upd-x.upd);$("list").innerHTML=a.length?a.map(o=>`<div class="row"><span>${o.g.nombre||"Sin nombre"}<br><small>${o.g.fa||""}</small></span><span><button data-o="${o.id}">Abrir</button> <button data-x="${o.id}" aria-label="Eliminar">Eliminar</button></span></div>`).join(""):'<p class="msg">Aún no hay evaluaciones guardadas.</p>'}
+$("list").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.o){load(db[b.dataset.o]);$("dlg").close()}if(b.dataset.x&&confirm("¿Eliminar esta evaluación? No se puede deshacer.")){delete db[b.dataset.x];localStorage.setItem(K,JSON.stringify(db));if(st.id==b.dataset.x)load(blank());list()}};
+$("bExp").onclick=()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:"application/json"}));a.download="wisc-evaluaciones.json";a.click()};
+$("bImp").onchange=async e=>{try{Object.assign(db,JSON.parse(await e.target.files[0].text()));localStorage.setItem(K,JSON.stringify(db));list()}catch{alert("El archivo no es una copia válida.")}};
+build();load(db[localStorage.getItem(KC)]||blank());
+if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{}));
+</script><script>
+const CAT=c=>c>=130?"Muy superior":c>=120?"Superior":c>=110?"Promedio alto":c>=90?"Promedio":c>=80?"Promedio bajo":c>=70?"Muy bajo (limítrofe)":"Extremadamente bajo";
+const MEAN={CV:"el razonamiento y la formación de conceptos verbales y el conocimiento adquirido",RP:"el razonamiento no verbal y la organización visoespacial",MT:"la capacidad de retener y manipular información en tiempo real y la atención",VP:"la rapidez y eficiencia en tareas visomotoras simples y la atención sostenida"};
+const pct=c=>cdf((c-100)/15)*100,f1=x=>x.toFixed(1).replace(/\.0$/,"");
+function data(){const S={};SUB.forEach(([k])=>S[k]=nv(st.s[k]));const C={};Object.keys(IDX).forEach(k=>C[k]=nv(st.c[k]));const U={};Object.keys(IDX).forEach(k=>{const m=mem(k).map(s=>S[s[0]]);U[k]=Math.max(...m)-Math.min(...m)<5});return{S,C,U}}
+function interp(){const{S,C,U}=data(),e=edad(),g=st.g,P=[];
+ P.push(["Datos de la evaluación",`${g.nombre}, de ${e[0]} años y ${e[1]} meses, fue evaluado/a con la Escala de Inteligencia de Wechsler para Niños (WISC-V) el ${g.fa}${g.examinador?`, aplicada por ${g.examinador}`:""}${g.mot?`. Motivo de evaluación: ${g.mot}`:""}.`]);
+ const ci=C.CIT,nu=Object.keys(U).filter(k=>k!="CIT"&&!U[k]);
+ P.push(["Funcionamiento intelectual global",`El C.I. Total es ${ci} (percentil ${f1(pct(ci))}), que corresponde a un nivel ${CAT(ci).toLowerCase()} respecto a su grupo de edad.`+(!U.CIT||nu.length?` Sin embargo, hay dispersión entre subpruebas (${!U.CIT?"CIT":nu.map(k=>k).join(", ")} no unitario/s), por lo que el C.I. Total resume un perfil heterogéneo y debe interpretarse con cautela, priorizando los índices.`:` Las subpruebas que lo componen son homogéneas, por lo que el C.I. Total es un resumen representativo del funcionamiento global.`)]);
+ const ix=["CV","RP","MT","VP"].map(k=>`${IDX[k]} (${C[k]}, percentil ${f1(pct(C[k]))}, nivel ${CAT(C[k]).toLowerCase()}) evalúa ${MEAN[k]}. ${U[k]?"El índice es unitario y plenamente interpretable.":"El índice no es unitario (las subpruebas difieren 5 o más puntos escalares); se recomienda interpretar las subpruebas por separado."}`);
+ P.push(["Índices principales",ix.join(" ")]);
+ const ks=["CV","RP","MT","VP"].sort((a,b)=>C[b]-C[a]),hi=ks[0],lo=ks[3],d=C[hi]-C[lo];
+ P.push(["Comparación entre índices",d>=15?`El índice más alto es ${IDX[hi]} (${C[hi]}) y el más bajo ${IDX[lo]} (${C[lo]}); la diferencia de ${d} puntos supera una desviación estándar y sugiere un perfil con fortalezas y debilidades relativas que conviene explorar clínicamente. Verifique la significancia estadística con las tablas del manual.`:`La diferencia entre el índice más alto y el más bajo es de ${d} puntos (menos de una desviación estándar), por lo que el perfil es relativamente uniforme.`]);
+ const pr=SUB.filter(s=>!s[3]).map(s=>S[s[0]]),m=pr.reduce((a,b)=>a+b,0)/pr.length,F=[],W=[];
+ SUB.filter(s=>!s[3]).forEach(s=>{const v=S[s[0]];if(v-m>=3)F.push(`${s[1]} (${v})`);if(m-v>=3)W.push(`${s[1]} (${v})`)});
+ P.push(["Fortalezas y debilidades en subpruebas",`Con un promedio de ${f1(m)} en las subpruebas principales, `+(F.length?`las fortalezas relativas (3 o más puntos sobre el promedio) son ${F.join(", ")}. `:"no hay fortalezas relativas marcadas. ")+(W.length?`Las debilidades relativas (3 o más puntos bajo el promedio) son ${W.join(", ")}.`:"No hay debilidades relativas marcadas.")]);
+ const A=[];CL.forEach(([n,ks])=>{const v=ks.map(k=>S[k]);if(v.some(x=>x==null))return;const x=v.reduce((a,b)=>a+b,0)/v.length;if(x<=7)A.push(`${n} (${f1(x)}) en rango bajo`);else if(x>=13)A.push(`${n} (${f1(x)}) en rango alto`)});
+ const cl=CL.filter(([n,ks])=>ks.every(k=>S[k]!=null)).length;
+ P.push(["Agrupaciones con subpruebas opcionales",cl?(A.length?`Destacan: ${A.join("; ")}.`:"Las agrupaciones calculadas se ubican en rangos esperados (entre 8 y 12)."):"No se aplicaron subpruebas opcionales suficientes para calcular agrupaciones."]);
+ const low=["CV","RP","MT","VP"].filter(k=>C[k]<90);
+ P.push(["Conclusiones y sugerencias",(ci>=90?"El desempeño intelectual global se ubica en el rango promedio o superior. ":ci>=80?"El desempeño intelectual global se ubica en el rango promedio bajo. ":"El desempeño intelectual global se ubica por debajo del rango promedio. ")+(low.length?`Se observan puntuaciones por debajo del promedio en ${low.map(k=>IDX[k]).join(", ")}; se sugiere profundizar con evaluación específica de esas áreas y considerar apoyos pedagógicos acordes. `:"Ningún índice principal está por debajo del promedio. ")+(C.MT<90||C.VP<90?"Las puntuaciones bajas en Memoria de Trabajo o Velocidad de Procesamiento pueden relacionarse con dificultades atencionales o de eficiencia en la ejecución; se recomienda descartar estos factores. ":"")+(C.CV-C.RP>=15||C.RP-C.CV>=15?"La brecha entre razonamiento verbal y perceptivo sugiere revisar factores de lenguaje, escolaridad o estilo de ejecución. ":"")]);
+ P.push(["Aviso","Esta interpretación se genera automáticamente con reglas basadas en las puntuaciones. Debe ser revisada e integrada por el profesional con la historia clínica, las observaciones conductuales, el contexto y otras pruebas, y verificada con el manual de la prueba."]);
+ return P}
+function svgImg(svg,w,h){return new Promise(res=>{const s=svg.replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" ').replace(/>/,`><style>.ct{font:700 12px sans-serif;fill:#111}.ax{font:9px sans-serif;fill:#555}.gl{stroke:#ccc}.rf{stroke:#777;stroke-dasharray:4 3}.ln{stroke:#0e5a6b;fill:none;stroke-width:2.5}.dt{fill:#0e5a6b}.vl{font:700 10px sans-serif;fill:#111}</style><rect width="100%" height="100%" fill="#fff"/>`),i=new Image();i.onload=()=>{const c=document.createElement("canvas");c.width=w*2;c.height=h*2;const x=c.getContext("2d");x.drawImage(i,0,0,w*2,h*2);const b=atob(c.toDataURL("image/jpeg",.9).split(",")[1]),u=new Uint8Array(b.length);for(let k=0;k<b.length;k++)u[k]=b.charCodeAt(k);res({w:c.width,h:c.height,u})};i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(s)})}
+const cl=s=>String(s).replace(/—/g,"-").replace(/≤/g,"<=").replace(/≥/g,">=").replace(/◆/g,"*").replace(/[^\x00-\xff]/g,"");
+function Doc(){const pages=[],o={pages,y:0,cur:null,np(){this.cur={ops:[],im:[]};pages.push(this.cur);this.y=800},
+ t(s,sz=10,b=0,x=40,wd=515){s=cl(s);const mc=Math.floor(wd/(sz*(b?.56:.5))),L=[];s.split("\n").forEach(p=>{let l="";p.split(" ").forEach(w=>{if((l+" "+w).trim().length>mc){L.push(l);l=w}else l=(l+" "+w).trim()});L.push(l)});L.forEach(l=>{if(this.y<60)this.np();this.cur.ops.push(`BT /F${b?2:1} ${sz} Tf ${x} ${this.y} Td (${l.replace(/[\\()]/g,"\\$&")}) Tj ET`);this.y-=sz*1.4})},
+ gap(n=6){this.y-=n},
+ img(im,w){const h=w*im.h/im.w;if(this.y-h<50)this.np();this.cur.im.push({im,x:40,y:this.y-h,w,h});this.y-=h+8}};o.np();return o}
+function bytes(d){const E=new TextEncoder(),ch=[];let len=0;const add=a=>{ch.push(a);len+=a.length},ws=s=>{const a=new Uint8Array(s.length);for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i)&255;add(a)},off=[];let n=0;
+ const obj=(body,stream)=>{off[++n]=len;ws(`${n} 0 obj\n`+body+(stream?"\nstream\n":"\nendobj\n"));if(stream){add(stream);ws("\nendstream\nendobj\n")}return n};
+ ws("%PDF-1.4\n");const pg=d.pages,base=5;let nx=base;const ids=[];
+ pg.forEach(p=>{p.pid=nx++;p.cid=nx++;p.im.forEach(i=>i.id=nx++)});
+ off[1]=len;ws("1 0 obj\n<</Type/Catalog/Pages 2 0 R>>\nendobj\n");n=1;
+ off[2]=len;ws(`2 0 obj\n<</Type/Pages/Count ${pg.length}/Kids[${pg.map(p=>p.pid+" 0 R").join(" ")}]>>\nendobj\n`);n=2;
+ off[3]=len;ws("3 0 obj\n<</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>\nendobj\n");
+ off[4]=len;ws("4 0 obj\n<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Bold/Encoding/WinAnsiEncoding>>\nendobj\n");n=4;
+ pg.forEach(p=>{const ops=p.ops.concat(p.im.map((i,k)=>`q ${i.w} 0 0 ${i.h} ${i.x} ${i.y} cm /I${k} Do Q`)).join("\n"),ob=new Uint8Array(ws0(ops));
+  off[p.pid]=len;ws(`${p.pid} 0 obj\n<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R/F2 4 0 R>>/XObject<<${p.im.map((i,k)=>`/I${k} ${i.id} 0 R`).join(" ")}>>>>/Contents ${p.cid} 0 R>>\nendobj\n`);
+  off[p.cid]=len;ws(`${p.cid} 0 obj\n<</Length ${ob.length}>>\nstream\n`);add(ob);ws("\nendstream\nendobj\n");
+  p.im.forEach(i=>{off[i.id]=len;ws(`${i.id} 0 obj\n<</Type/XObject/Subtype/Image/Width ${i.im.w}/Height ${i.im.h}/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length ${i.im.u.length}>>\nstream\n`);add(i.im.u);ws("\nendstream\nendobj\n")})});
+ const xr=len;ws(`xref\n0 ${nx}\n0000000000 65535 f \n`);for(let i=1;i<nx;i++)ws(String(off[i]).padStart(10,"0")+" 00000 n \n");ws(`trailer\n<</Size ${nx}/Root 1 0 R>>\nstartxref\n${xr}\n%%EOF`);
+ const out=new Uint8Array(len);let p=0;ch.forEach(a=>{out.set(a,p);p+=a.length});return out}
+function ws0(s){const a=[];for(let i=0;i<s.length;i++)a.push(s.charCodeAt(i)&255);return a}
+async function report(dl){const{S,C,U}=data(),e=edad(),g=st.g,I=interp(),D=Doc();
+ D.t("WISC-V · Informe de resultados",16,1);D.gap(4);D.t("Datos generales",12,1);
+ D.t(`Nombre: ${g.nombre}\nExaminador: ${g.examinador||"-"}\nFecha de nacimiento: ${g.fn}    Fecha de aplicación: ${g.fa}\nEdad cronológica: ${e[0]} años, ${e[1]} meses, ${e[2]} días${g.esc?"\nEscolaridad: "+g.esc:""}${g.mot?"\nMotivo de evaluación: "+g.mot:""}`);D.gap();
+ D.t("Puntuaciones escalares",12,1);SUB.forEach(([k,n,ix,o])=>{if(S[k]!=null)D.t(`${n} (${k}, ${ix}${o?", opcional":""}): ${S[k]}   dif. vs 10: ${S[k]-10>0?"+":""}${S[k]-10}`)});D.gap();
+ D.t("Puntuaciones compuestas",12,1);Object.keys(IDX).forEach(k=>D.t(`${IDX[k]}: suma ${mem(k).reduce((a,s)=>a+(S[s[0]]||0),0)} | compuesta ${C[k]} | percentil ${pct(C[k]).toFixed(2)} | ${CAT(C[k])} | ${k=="CIT"?"":U[k]?"unitario":"no unitario"}`));D.gap();
+ D.t("Gráficas",12,1);D.img(await svgImg(chart("Perfil de puntuaciones compuestas",["CV","RP","MT","VP","CIT"],Object.keys(IDX).map(k=>C[k]),40,170,10,100,260),340,260),420);
+ for(const k of["CV","RP","MT","VP"])D.img(await svgImg(chart(IDX[k],mem(k).map(s=>s[0]),mem(k).map(s=>S[s[0]]),0,19,1,10),340,190),340);
+ const cls=CL.filter(([n,ks])=>ks.every(k=>S[k]!=null));if(cls.length){D.t("Agrupaciones con subpruebas opcionales",12,1);cls.forEach(([n,ks])=>{const m=ks.reduce((a,k)=>a+S[k],0)/ks.length;D.t(`${n}: ${m.toFixed(2)} (desv. ${(m-10).toFixed(2)})`)});D.gap()}
+ D.t("Interpretación clínica",14,1);I.forEach(([a,b])=>{D.gap(4);D.t(a,11,1);D.t(b)});
+ $("rep").innerHTML=`<p><b>${g.nombre}</b> · ${$("edad").textContent}</p><div class="tot">${Object.keys(IDX).map(k=>`<div><span>${k}</span><b>${C[k]}</b><span>${CAT(C[k])}</span></div>`).join("")}</div><div class="charts">${chart("Perfil de puntuaciones compuestas",["CV","RP","MT","VP","CIT"],Object.keys(IDX).map(k=>C[k]),40,170,10,100,260)}</div><h2>Interpretación clínica</h2>${I.map(([a,b])=>`<p><b>${a}.</b> ${b}</p>`).join("")}`;
+ tab(4);if(dl){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([bytes(D)],{type:"application/pdf"}));a.download=("WISC-V_"+g.nombre.trim().replace(/\s+/g,"_")+"_"+g.fa+".pdf");document.body.append(a);a.click();a.remove()}}
+$("bFin").onclick=()=>{const f=[...SUB.filter(s=>!s[3]).filter(s=>nv(st.s[s[0]])==null).map(s=>s[1]),...Object.keys(IDX).filter(k=>nv(st.c[k])==null).map(k=>"compuesta "+k)];$("fmsg").textContent=f.length?"Falta completar: "+f.join(", ")+".":"";if(!f.length)report(1)};
+$("bPdf").onclick=()=>report(1);
+</script><script>
+const HH=s=>{let a=0xdeadbeef,b=0x41c6ce57;for(let i=0;i<s.length;i++){const c=s.charCodeAt(i);a=Math.imul(a^c,2654435761);b=Math.imul(b^c,1597334677)}a=Math.imul(a^(a>>>16),2246822507)^Math.imul(b^(b>>>13),3266489909);b=Math.imul(b^(b>>>16),2246822507)^Math.imul(a^(a>>>13),3266489909);return 4294967296*(2097151&b)+(a>>>0)},OKH=8450845994516044;
+const authed=()=>localStorage.getItem("wiscv.auth")=="1"||sessionStorage.getItem("wiscv.auth")=="1";
+const gate=()=>document.body.classList.toggle("locked",!authed());gate();
+$("lf").onsubmit=e=>{e.preventDefault();if(HH($("lu").value.trim().toLowerCase()+"|"+$("lp").value)===OKH){(($("lr").checked)?localStorage:sessionStorage).setItem("wiscv.auth","1");$("lp").value="";$("lerr").textContent="";gate()}else $("lerr").textContent="Usuario o contraseña incorrectos."};
+$("bOut").onclick=()=>{localStorage.removeItem("wiscv.auth");sessionStorage.removeItem("wiscv.auth");$("dlg").close();gate()};
+(()=>{let s="";const mk=(c,ph,y0,amp,n)=>{for(let k=0;k<n;k++){let d="";for(let x=0;x<=100;x+=2)d+=(x?"L":"M")+x+" "+(y0+amp*Math.sin(x/100*5+ph+k*.09)*(1+k*.03)+k*.5).toFixed(2)+" ";s+=`<path d="${d}" stroke="${c}" stroke-width=".12" fill="none" opacity=".55"/>`}};mk("#d946ef",0,28,9,26);mk("#ff6a3d",2.4,84,7,26);const w=$("waves");w.setAttribute("viewBox","0 0 100 100");w.setAttribute("preserveAspectRatio","none");w.innerHTML=s})();
+if("serviceWorker"in navigator){const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener("controllerchange",()=>{if(had&&!window.__r){window.__r=1;location.reload()}})}
+</script></body></html>
