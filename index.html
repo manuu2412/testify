@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1230">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Pruebas">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="robots" content="noindex,nofollow">
+<link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Plataforma de pruebas</title>
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--txt:#f3eefc;--mut:rgba(243,238,252,.66);--line:rgba(255,255,255,.55)}
+html,body{min-height:100%}
+body{font-family:"Montserrat","Segoe UI",system-ui,sans-serif;color:var(--txt);background:#1c1230;
+ padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;
+ background:radial-gradient(40% 35% at 50% 12%,#8b2a3a 0,transparent 70%),radial-gradient(45% 40% at 85% 55%,#1b1d5a 0,transparent 70%),
+ radial-gradient(50% 40% at 55% 100%,#8d9be0 0,transparent 70%),radial-gradient(40% 40% at 5% 75%,#4a1f3a 0,transparent 70%);filter:blur(30px)}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+ border:1px solid rgba(255,255,255,.18);border-radius:36px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.wrap{max-width:760px;margin:0 auto;padding:24px 16px 60px}
+.center{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:340px;padding:34px 28px 30px;text-align:center}
+.avatar{width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.22);margin:0 auto 26px;display:grid;place-items:end center;overflow:hidden}
+.avatar svg{width:70%;fill:rgba(255,255,255,.5)}
+.fld{display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--line);padding:10px 2px;margin-bottom:22px}
+.fld>span{width:18px;text-align:center;font-size:15px}
+input,select{font:inherit;color:var(--txt);background:none;border:0;outline:0;width:100%;font-size:15px}
+input::placeholder{color:var(--txt);opacity:.9}
+.row{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);margin:-4px 0 24px;align-items:center}
+.row label{display:flex;gap:8px;align-items:center}.row input{width:auto}
+.row a{font-style:italic;color:var(--mut);text-decoration:none}
+button{font:inherit;cursor:pointer;color:#fff}
+.btn{width:100%;border:0;border-radius:18px;padding:15px;font-weight:700;letter-spacing:.08em;font-size:14px;background:linear-gradient(90deg,#3b1033,#4d4fd1 90%);transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.15)}.btn:active{transform:scale(.98)}
+.btn.ghost{background:rgba(255,255,255,.12);width:auto;padding:10px 18px;font-size:13px;letter-spacing:0;font-weight:500}
+:focus-visible{outline:2px solid #aeb8ff;outline-offset:3px;border-radius:6px}
+.err{color:#ffb4c0;font-size:13px;min-height:18px;margin-top:12px}
+header.top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:12px}
+h1{font-size:22px;font-weight:600}h2{font-size:17px;font-weight:600;margin-bottom:14px}
+h3{font-size:15px;font-weight:600;margin:22px 0 2px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.25)}
+.sub{color:var(--mut);font-size:13px;margin-top:4px;line-height:1.5;max-width:560px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+.test{padding:22px;text-align:left;border-radius:28px;display:block;width:100%;transition:transform .15s}
+.test:hover{transform:translateY(-3px)}
+.test b{display:block;font-size:16px;margin-bottom:6px}.test small{color:var(--mut);font-size:12.5px;line-height:1.5;display:block}
+.tag{display:inline-block;margin-top:12px;font-size:11px;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.14)}
+.sec{padding:24px;margin-bottom:18px;border-radius:28px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+@media(max-width:560px){.two{grid-template-columns:1fr}.sec{padding:20px 16px}}
+.lbl{font-size:12px;color:var(--mut);display:block;margin-bottom:2px}
+.fld>div{width:100%}
+select option{color:#111}input[type=date]{color-scheme:dark}
+.item{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.item p{font-size:14.5px;margin-bottom:12px;line-height:1.5}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.opts label{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font-size:13px;line-height:1.3;cursor:pointer;background:rgba(255,255,255,.09);border:1px solid transparent}
+.opts input{-webkit-appearance:none;appearance:none;width:18px;height:18px;flex:none;margin:0;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:none}
+.opts input:checked{border-color:#fff;background:radial-gradient(circle,#fff 0 38%,transparent 44%)}
+.opts label:has(input:checked){background:linear-gradient(90deg,#5b1b4a,#4d4fd1);border-color:rgba(255,255,255,.4)}
+.opts.two-o{grid-template-columns:repeat(2,1fr);max-width:260px}
+.bar{position:sticky;top:env(safe-area-inset-top);z-index:5;height:6px;border-radius:6px;background:rgba(255,255,255,.18);margin:0 0 18px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#c0455c,#6f78ee);transition:width .3s}
+.res{white-space:pre-wrap;font-size:13.5px;line-height:1.65}
+.hide{display:none!important}
+.hc{padding:18px 20px;margin-bottom:12px;border-radius:24px}.hc b{font-size:15px}.hc small{color:var(--mut);font-size:12px}.hc p{margin:6px 0 0;font-size:13px;word-break:break-all}
+.hb{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.hb button{padding:8px 14px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(255,255,255,.1);font-size:13px}.hb .pr{border:0;background:linear-gradient(90deg,#3b1033,#4d4fd1 90%);font-weight:600}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:50;max-width:92%;padding:12px 18px;border-radius:16px;font-size:13px;background:rgba(40,28,70,.92);border:1px solid rgba(255,255,255,.25);text-align:center}
+#vApp{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;background:#1c1230;padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.appbar{display:flex;align-items:center;gap:14px;padding:8px 12px;background:rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.15)}
+#appFrame{flex:1;width:100%;border:0;background:#1c1230}
+.ico{font-size:30px;display:block;margin-bottom:10px}
+.chk{display:flex;gap:12px;align-items:flex-start;cursor:pointer;font-size:14.5px;line-height:1.5}
+.chk input{-webkit-appearance:none;appearance:none;width:20px;height:20px;flex:none;margin:2px 0 0;border-radius:6px;border:2px solid rgba(255,255,255,.75);background:none}
+.chk input:checked{background:linear-gradient(135deg,#c0455c,#4d4fd1);border-color:#fff}
+.chk input:checked::after{content:"✓";display:block;text-align:center;font-size:13px;line-height:16px;color:#fff}
+.note{font-size:12.5px;color:var(--mut);margin-top:10px;line-height:1.55}
+.filtro{padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1);margin-top:14px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<main id="vLogin" class="center hide">
+ <form class="glass card" id="fLogin" autocomplete="on">
+  <div class="avatar"><svg viewBox="0 0 100 100"><path d="M50 12c-11 0-19 9-19 21 0 8 4 15 9 19-14 4-24 14-24 36h68c0-22-10-32-24-36 5-4 9-11 9-19 0-12-8-21-19-21z"/></svg></div>
+  <div class="fld"><span>✉</span><input id="u" placeholder="Usuario" autocomplete="username" required></div>
+  <div class="fld"><span>🔒</span><input id="p" type="password" placeholder="Contraseña" autocomplete="current-password" required></div>
+  <div class="row"><label><input type="checkbox" id="rem" checked> Recordarme</label><a href="#" id="forgot">¿Olvidaste tu contraseña?</a></div>
+  <button class="btn" type="submit">ENTRAR</button>
+  <p class="err" id="err" role="alert"></p>
+ </form>
+</main>
+
+<main id="vHome" class="wrap hide">
+ <header class="top"><div><h1>Plataforma de pruebas psicológicas</h1><p class="sub">Elige un apartado · <span id="quien"></span></p></div>
+ <div style="display:flex;gap:8px"><button class="btn ghost" id="hist">Historial</button><button class="btn ghost" id="out">Salir</button></div></header>
+ <div class="grid" id="list"></div>
+</main>
+
+<main id="vCat" class="wrap hide">
+ <header class="top"><div><h1 id="cName"></h1><p class="sub" id="cDesc"></p></div>
+ <button class="btn ghost" id="cBack">← Inicio</button></header>
+ <div class="grid" id="catList"></div>
+</main>
+
+<main id="vBloq" class="center hide">
+ <div class="glass card"><h2>Sesión no verificada</h2><p class="note">No se pudo confirmar tu identidad. Recarga la página para iniciar sesión.</p>
+ <button class="btn" id="reint" style="margin-top:16px">REINTENTAR</button></div>
+</main>
+
+<main id="vUsr" class="wrap hide">
+ <header class="top"><div><h1>Usuarios</h1><p class="sub">Agrega o quita a quién puede entrar a la plataforma. Los cambios se aplican en Cloudflare al momento.</p></div>
+ <button class="btn ghost" id="uBack">← Inicio</button></header>
+ <form class="glass sec" id="fUsr" novalidate><h2>Agregar usuario</h2>
+  <div class="fld"><div><span class="lbl">Correo electrónico</span><input id="uMail" type="email" autocomplete="off" placeholder="nombre@correo.com"></div></div>
+  <p class="err" id="uErr" role="alert"></p><button class="btn" type="submit">AGREGAR</button>
+  <p class="note">La persona entrará con ese correo: Cloudflare le enviará un código de acceso. Avísale tú que ya tiene acceso.</p></form>
+ <div class="glass sec"><h2 id="uTit">Usuarios con acceso</h2><div id="uList"></div></div>
+</main>
+
+<main id="vHist" class="wrap hide">
+ <header class="top"><div><h1>Historial</h1><p class="sub">Pruebas que aplicaste y archivos que generaste. Solo tú los ves, y se guardan en este dispositivo.</p></div>
+ <button class="btn ghost" id="hBack">← Inicio</button></header>
+ <div class="glass sec"><div class="two">
+  <div class="fld"><div><span class="lbl">Prueba</span><select id="hTest"></select></div></div>
+  <div class="fld"><div><span class="lbl">Buscar por nombre de archivo</span><input id="hQ" placeholder="Nombre del evaluado…"></div></div></div></div>
+ <div id="hList"></div>
+</main>
+
+<main id="vApp" class="hide">
+ <div class="appbar"><button class="btn ghost" id="appBack">← Apartado</button><b id="appName"></b></div>
+ <iframe id="appFrame" title="Prueba"></iframe>
+</main>
+
+<main id="vTest" class="wrap hide">
+ <header class="top"><div><h1 id="tName"></h1><p class="sub" id="tDesc"></p></div>
+ <button class="btn ghost" id="back">← Panel</button></header>
+
+ <form id="fDatos" class="glass sec" novalidate>
+  <h2>Datos generales</h2>
+  <div class="two" id="gCampos"></div>
+  <p class="note" id="edad"></p>
+  <div id="sPadre" class="hide">
+   <h2 style="margin-top:22px">Datos del padre, madre o tutor</h2>
+   <div class="two">
+    <div class="fld"><div><span class="lbl">Nombre</span><input name="padre_nombre"></div></div>
+    <div class="fld"><div><span class="lbl">Parentesco</span><select name="padre_parentesco"><option value="">Selecciona</option><option>Madre</option><option>Padre</option><option>Tutor/a</option><option>Otro</option></select></div></div>
+    <div class="fld"><div><span class="lbl">Edad</span><input type="number" name="padre_edad" min="18"></div></div>
+    <div class="fld"><div><span class="lbl">Ocupación</span><input name="padre_ocupacion"></div></div>
+   </div>
+  </div>
+  <p class="err" id="dErr" role="alert"></p>
+  <button class="btn" type="submit" style="margin-top:10px">INICIAR PRUEBA</button>
+ </form>
+
+ <form id="fItems" class="hide" novalidate>
+  <div class="bar"><i id="prog"></i></div>
+  <section class="glass sec"><p class="note" id="instr" style="margin:0 0 4px"></p><div id="items"></div>
+   <p class="err" id="tErr" role="alert"></p>
+   <button class="btn" type="submit" style="margin-top:14px">FINALIZAR Y DESCARGAR</button>
+  </section>
+ </form>
+
+ <section class="glass sec hide" id="sRes"><h2>Resultado</h2><div class="res" id="resTxt"></div>
+  <p class="note">El archivo se descargó automáticamente.</p>
+  <button class="btn" id="again" style="margin-top:16px">Volver al panel</button></section>
+</main>
+
+<div id="toast" class="hide" role="status"></div>
+<script>window.TESTS=[];</script>
+<script src="tests/categorias.js"></script>
+<script src="tests/gars3.js"></script>
+<script src="tests/cmasr2.js"></script>
+<script src="tests/wiscv.js"></script>
+<script src="tests/wisc4.js"></script>
+<script src="tests/figurahumana.js"></script>
+<script src="tests/genogramas.js"></script>
+<script>
+const HASH="74287132139591b65a57fc5bc2ab02cce1250a29f76a9ad9692b83aa4e000050";
+const $=s=>document.querySelector(s);
+const views=["vLogin","vBloq","vHome","vCat","vUsr","vHist","vApp","vTest"];
+const show=id=>{views.forEach(v=>$("#"+v).classList.toggle("hide",v!==id));scrollTo(0,0)};
+const sha=async t=>[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)))].map(b=>b.toString(16).padStart(2,"0")).join("");
+const isIn=()=>localStorage.getItem("tea_ses")==="1"||sessionStorage.getItem("tea_ses")==="1";
+
+/* Identidad: con Cloudflare Access se toma el correo de la cuenta; solo en pruebas locales o github.io se usa el login de respaldo */
+let user=null;
+const LOCAL=/^(localhost|127\.0\.0\.1)$/.test(location.hostname)||location.hostname.endsWith(".github.io");
+async function identidad(){try{const r=await fetch("/cdn-cgi/access/get-identity",{cache:"no-store",credentials:"include"});
+ if(r.ok){const j=await r.json();if(j&&j.email)return{id:String(j.email).toLowerCase(),acceso:true}}}catch(e){}return null}
+async function fijarUsuario(id,acceso){user={id,acceso:!!acceso,h:(await sha("tea|"+id)).slice(0,16),corto:id.split("@")[0]};$("#quien").textContent=id}
+
+/* Datos separados por cuenta (las pruebas guardan con claves fijas; la plataforma las intercambia por usuario) */
+const nsk=(h,k)=>"tea:"+h+":"+k;
+function guardarApp(t,h){(t.almacen||[]).forEach(k=>{const v=localStorage.getItem(k);v===null?localStorage.removeItem(nsk(h,k)):localStorage.setItem(nsk(h,k),v)})}
+function cargarApp(t,h){const f="tea:mig:"+t.id;if(!localStorage.getItem(f)){guardarApp(t,h);localStorage.setItem(f,"1")} // datos anteriores a las cuentas: los adopta el primer usuario
+ (t.almacen||[]).forEach(k=>{const v=localStorage.getItem(nsk(h,k));v===null?localStorage.removeItem(k):localStorage.setItem(k,v)})}
+function limpiarApp(t){(t.almacen||[]).forEach(k=>localStorage.removeItem(k))}
+function recuperar(){try{const a=JSON.parse(localStorage.getItem("tea_activo")||"null");if(a){const t=TESTS.find(x=>x.id===a.test);if(t){guardarApp(t,a.h);limpiarApp(t)}localStorage.removeItem("tea_activo")}}catch(e){}}
+
+/* Historial (IndexedDB, separado por cuenta) */
+const DB=()=>new Promise((ok,no)=>{const r=indexedDB.open("tea_hist",1);r.onupgradeneeded=()=>{r.result.createObjectStore("arch",{keyPath:"id",autoIncrement:true}).createIndex("uid","uid")};r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error)});
+const histAdd=async rec=>{const db=await DB();return new Promise((ok,no)=>{const tx=db.transaction("arch","readwrite");tx.objectStore("arch").add(rec);tx.oncomplete=ok;tx.onerror=()=>no(tx.error)})};
+const histList=async()=>{const db=await DB();return new Promise((ok,no)=>{const q=db.transaction("arch").objectStore("arch").index("uid").getAll(user.h);q.onsuccess=()=>ok(q.result);q.onerror=()=>no(q.error)})};
+const histGet=async id=>{const db=await DB();return new Promise((ok,no)=>{const q=db.transaction("arch").objectStore("arch").get(id);q.onsuccess=()=>ok(q.result&&q.result.uid===user.h?q.result:null);q.onerror=()=>no(q.error)})};
+const histDel=async id=>{const r=await histGet(id);if(!r)return;const db=await DB();return new Promise((ok,no)=>{const tx=db.transaction("arch","readwrite");tx.objectStore("arch").delete(id);tx.oncomplete=ok;tx.onerror=()=>no(tx.error)})};
+let avT=null;
+function aviso(m){if(pend)return;const t=$("#toast");t.textContent=m;t.classList.remove("hide");clearTimeout(avT);avT=setTimeout(()=>t.classList.add("hide"),2400)}
+async function guardarHist(nombre,blob,t=T){if(!user)return;try{await histAdd({uid:user.h,test:t.id,testNombre:t.nombre,archivo:nombre,tipo:blob.type||"application/octet-stream",tam:blob.size,fecha:new Date().toISOString(),blob});aviso("Guardado en tu historial")}catch(e){}}
+const kb=n=>n<1048576?Math.max(1,Math.round(n/1024))+" KB":(n/1048576).toFixed(1)+" MB";
+async function verHist(){show("vHist");
+ const L=(await histList()).sort((a,b)=>b.fecha.localeCompare(a.fecha)),sel=$("#hTest"),act=sel.value;
+ sel.innerHTML='<option value="">Todas las pruebas</option>'+[...new Set(L.map(r=>r.testNombre))].map(n=>`<option>${esc(n)}</option>`).join("");sel.value=[...sel.options].some(o=>o.value===act)?act:"";
+ const q=$("#hQ").value.trim().toLowerCase(),F=L.filter(r=>(!sel.value||r.testNombre===sel.value)&&(!q||r.archivo.toLowerCase().includes(q)));
+ $("#hList").innerHTML=F.length?F.map(r=>`<div class="glass hc"><b>${esc(r.testNombre)}</b> <small>· ${new Date(r.fecha).toLocaleString("es-MX",{dateStyle:"medium",timeStyle:"short"})} · ${kb(r.tam)}</small><p>${esc(r.archivo)}</p>
+  <div class="hb"><button class="pr" data-a="d" data-id="${r.id}">Descargar</button>${/pdf|html|image/.test(r.tipo)?`<button data-a="o" data-id="${r.id}">Abrir</button>`:""}<button data-a="x" data-id="${r.id}">Eliminar</button></div></div>`).join("")
+  :`<p class="note" style="text-align:center;padding:30px 10px">${L.length?"No hay archivos con ese filtro.":"Aún no hay archivos. Cada PDF, imagen o reporte que generes aparecerá aquí."}</p>`}
+$("#hist").onclick=verHist;$("#hBack").onclick=()=>home();$("#hTest").onchange=verHist;$("#hQ").oninput=verHist;
+$("#hList").onclick=async e=>{const b=e.target.closest("button[data-a]");if(!b)return;const id=+b.dataset.id,r=await histGet(id);if(!r)return;
+ if(b.dataset.a==="x"){if(confirm("¿Eliminar este archivo del historial?")){await histDel(id);verHist()}return}
+ const u=URL.createObjectURL(r.blob);
+ if(b.dataset.a==="o"){window.open(u,"_blank");setTimeout(()=>URL.revokeObjectURL(u),60000);return}
+ const a=Object.assign(document.createElement("a"),{href:u,download:r.archivo});document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1500)};
+$("#reint").onclick=()=>location.reload();
+
+/* Administración de usuarios: solo el administrador (el servidor lo comprueba en cada petición) */
+async function detectarAdmin(){user.admin=false;try{const r=await fetch("/api/yo",{cache:"no-store"});if(r.ok){const j=await r.json();user.admin=!!j.admin}}catch(e){}}
+const apiU=async(m,b)=>{const r=await fetch("/api/usuarios",{method:m,cache:"no-store",headers:{"Content-Type":"application/json","X-TEA":"1"},body:b?JSON.stringify(b):undefined});
+ let j={};try{j=await r.json()}catch(e){}if(!r.ok)throw new Error(j.error||"No se pudo completar la operación.");return j};
+function pintarUsr(j){$("#uTit").textContent=`Usuarios con acceso (${j.usuarios.length} de ${j.limite})`;
+ $("#uList").innerHTML=j.usuarios.map(e=>`<div style="padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;align-items:center;gap:10px"><span style="word-break:break-all;font-size:14px">${esc(e)}</span>${e===j.admin?'<span class="tag" style="margin:0">Administrador</span>':`<button class="btn ghost" data-e="${esc(e).replace(/"/g,"&quot;")}" style="padding:6px 12px;font-size:12px">Quitar</button>`}</div>`).join("")}
+async function verUsuarios(){show("vUsr");$("#uErr").textContent="";$("#uList").innerHTML='<p class="note">Cargando…</p>';
+ try{pintarUsr(await apiU("GET"))}catch(e){$("#uList").innerHTML="";$("#uErr").textContent=e.message}}
+$("#uBack").onclick=()=>home();
+$("#fUsr").onsubmit=async ev=>{ev.preventDefault();const m=$("#uMail").value.trim().toLowerCase();$("#uErr").textContent="";if(!m)return;
+ try{pintarUsr(await apiU("POST",{email:m}));$("#uMail").value="";aviso("Usuario agregado: "+m)}catch(e){$("#uErr").textContent=e.message}};
+$("#uList").onclick=async ev=>{const b=ev.target.closest("button[data-e]");if(!b)return;const m=b.dataset.e;
+ if(!confirm("¿Quitar el acceso de "+m+"?\nYa no podrá iniciar sesión cuando venza su sesión actual."))return;
+ try{pintarUsr(await apiU("DELETE",{email:m}));aviso("Acceso quitado: "+m)}catch(e){$("#uErr").textContent=e.message}};
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+
+/* Login */
+$("#fLogin").onsubmit=async e=>{e.preventDefault();
+ if(await sha($("#u").value.trim()+":"+$("#p").value)===HASH){($("#rem").checked?localStorage:sessionStorage).setItem("tea_ses","1");$("#err").textContent="";await fijarUsuario("manu",false);home()}
+ else $("#err").textContent="Usuario o contraseña incorrectos."};
+$("#forgot").onclick=e=>{e.preventDefault();$("#err").textContent="Contacta al administrador de la app."};
+$("#out").onclick=()=>{TESTS.forEach(t=>t.sesion&&store(t.sesion).removeItem(t.sesion.clave));
+ if(user&&user.acceso){location.href="/cdn-cgi/access/logout";return}
+ localStorage.removeItem("tea_ses");sessionStorage.removeItem("tea_ses");user=null;show("vLogin")};
+
+/* Panel */
+function home(){
+ if(aplicarPend())return;
+ $("#list").innerHTML=CATS.map(c=>{const n=TESTS.filter(t=>t.categoria===c.id).length;
+  return `<button class="glass test" data-cat="${c.id}"><span class="ico">${c.icono}</span><b>${esc(c.nombre)}</b><small>${esc(c.descripcion)}</small><span class="tag">${n} ${n===1?"prueba":"pruebas"}</span></button>`}).join("")+(user&&user.admin?'<button class="glass test" data-cat="__usr"><span class="ico">👥</span><b>Usuarios</b><small>Agrega o quita a quién puede entrar a la plataforma.</small><span class="tag">Solo administrador</span></button>':"");
+ document.querySelectorAll("#list .test").forEach(b=>b.onclick=()=>b.dataset.cat==="__usr"?verUsuarios():openCat(b.dataset.cat));
+ show("vHome")}
+function openCat(id){
+ if(aplicarPend())return;
+ const c=CATS.find(x=>x.id===id),L=TESTS.filter(t=>t.categoria===id);
+ $("#cName").textContent=c.nombre;$("#cDesc").textContent=c.descripcion;
+ $("#catList").innerHTML=L.length?L.map(t=>`<button class="glass test" data-id="${t.id}"><b>${esc(t.nombre)}</b><small>${esc(t.descripcion)}</small><span class="tag">${esc(t.etiqueta||t.items.length+(t.modo==="marcar"?" indicadores":" ítems")+" · "+(t.tipo||"Aplicación"))}</span></button>`).join(""):'<p class="note">Aún no hay pruebas en este apartado.</p>';
+ document.querySelectorAll("#catList .test").forEach(b=>b.onclick=()=>openTest(b.dataset.id));
+ show("vCat")}
+$("#cBack").onclick=home;
+let T=null,enItems=false,pend=false;
+$("#back").onclick=()=>{if(enItems&&!confirm("¿Salir de la prueba? Se perderán las respuestas."))return;openCat(T.categoria)};
+$("#again").onclick=()=>openCat(T.categoria);
+
+/* Pruebas independientes (carpeta propia, se abren dentro de la plataforma) */
+let appTimer=null,appSes=null,appSave=null;
+const store=s=>s.almacen==="local"?localStorage:sessionStorage;
+function openApp(){
+ appSes=T.sesion===null?null:Object.assign({},T.sesion||{clave:"u",valor:"manu"});if(appSes&&appSes.usuario)appSes.valor=user.corto;if(appSes)store(appSes).setItem(appSes.clave,appSes.valor); // la prueba reutiliza la sesión de la plataforma
+ cargarApp(T,user.h);localStorage.setItem("tea_activo",JSON.stringify({h:user.h,test:T.id}));clearInterval(appSave);appSave=setInterval(()=>guardarApp(T,user.h),2000);
+ $("#appName").textContent=T.nombre;temar();$("#appFrame").src=T.app;show("vApp");
+ if(appSes)appTimer=setInterval(()=>{if(store(appSes).getItem(appSes.clave)!==appSes.valor)closeApp()},400); // si la prueba cierra sesión, regresa
+ if(T.liberarSW)liberarSW(T.app.split("/")[0])}
+// Algunas pruebas traen su propia caché que no se actualiza sola; se desactiva para que siempre carguen lo más nuevo.
+function liberarSW(dir){const f=()=>navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>{if(new URL(r.scope).pathname.includes("/"+dir+"/"))r.unregister()})).catch(()=>{});[800,2500,6000].forEach(ms=>setTimeout(f,ms))}
+// Aplica el tema visual de la plataforma a las pruebas que lo piden (sin modificar sus archivos)
+// Registra en el historial los archivos que genera cada prueba (sin modificarla)
+function enganchar(w){w.__teaH=1;const P=w.HTMLAnchorElement.prototype,o=P.click;
+ P.click=function(){try{if(this.download&&/^blob:/.test(this.href)){const n=this.download;fetch(this.href).then(r=>r.blob()).then(b=>guardarHist(n,b)).catch(()=>{})}}catch(e){}return o.apply(this,arguments)};
+ if(T.capturarImpresion){const op=w.print;w.print=function(){try{informeHist(w)}catch(e){}return op.apply(w,arguments)}}}
+function informeHist(w){const rep=w.document.querySelector(".rep");if(!rep)return;let css="";
+ [...w.document.styleSheets].forEach(s=>{if(s.ownerNode&&/^tema-/.test(s.ownerNode.id||""))return;try{css+=[...s.cssRules].map(r=>r.cssText).join("\n")}catch(e){}});
+ const html='<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(T.nombre)+'</title><style>'+css+'html,body{background:#fff!important;color:#111}#app{padding:16px}</style><body><div id="app">'+rep.outerHTML+'</div></body></html>';
+ const f=new Date(),p=n=>String(n).padStart(2,"0");
+ guardarHist(T.nombre.replace(/\s+/g,"")+"_informe_"+f.getFullYear()+"-"+p(f.getMonth()+1)+"-"+p(f.getDate())+"_"+p(f.getHours())+p(f.getMinutes())+".html",new Blob([html],{type:"text/html"}))}
+function temar(){const fr=$("#appFrame");fr.style.visibility=T.tema?"hidden":"visible";
+ fr.onload=()=>{const ver=()=>fr.style.visibility="visible";
+  let d=null,w=null;try{d=fr.contentDocument;w=fr.contentWindow}catch(e){}
+  if(w&&d&&d.head&&!w.__teaH)enganchar(w);
+  if(!T.tema||!d||!d.head||d.getElementById("tema-plat"))return ver();
+  let n=0;const fin=()=>{if(++n===2)ver()};
+  ["base",T.tema].forEach(x=>{const l=d.createElement("link");l.rel="stylesheet";l.id=x==="base"?"tema-plat":"tema-"+x;
+   l.href=new URL("temas/"+x+".css",location.href).href;l.onload=l.onerror=fin;d.head.appendChild(l)});
+  setTimeout(ver,2500)}}
+function closeApp(){fr0();clearInterval(appTimer);clearInterval(appSave);if(user&&T){guardarApp(T,user.h);limpiarApp(T)}localStorage.removeItem("tea_activo");if(appSes&&appSes.almacen==="local")localStorage.removeItem(appSes.clave);$("#appFrame").src="about:blank";openCat(T.categoria)}
+$("#appBack").onclick=closeApp;
+function fr0(){$("#appFrame").onload=null}
+
+/* Datos generales */
+const age=(n,f)=>{if(!n||!f)return null;const a=new Date(n),b=new Date(f);let y=b.getFullYear()-a.getFullYear(),m=b.getMonth()-a.getMonth();
+ if(b.getDate()<a.getDate())m--;if(m<0){y--;m+=12}return{y,m}};
+function campos(){const g=T.generales||{};return[
+ {n:"nombre",l:"Nombre completo del evaluado",r:1},
+ {n:"nac",l:"Fecha de nacimiento",t:"date",r:1},
+ {n:"sexo",l:"Sexo",o:g.sexos||["Femenino","Masculino","Otro"],r:1},
+ {n:"fecha",l:"Fecha de aplicación",t:"date",r:1},
+ g.niveles?{n:"nivel",l:"Estudia (nivel)",o:g.niveles}:{n:"escolaridad",l:"Escolaridad / ocupación"},
+ g.evaluadores?{n:"evaluador",l:"Evaluador (quién contesta)",o:g.evaluadores,r:1}:{n:"aplicador",l:"Aplicador"}]}
+function openTest(id){
+ T=TESTS.find(t=>t.id===id);enItems=false;if(T.app)return openApp();
+ $("#tName").textContent=T.nombre;$("#tDesc").textContent=T.descripcion;
+ $("#gCampos").innerHTML=campos().map(c=>`<div class="fld"><div><span class="lbl">${c.l}${c.r?" *":""}</span>`+
+  (c.o?`<select name="${c.n}"><option value="">Selecciona</option>${c.o.map(x=>`<option>${x}</option>`).join("")}</select>`:`<input name="${c.n}" type="${c.t||"text"}">`)+`</div></div>`).join("");
+ $("#fDatos").reset();$("#fDatos").elements.fecha.valueAsDate=new Date();
+ $("#dErr").textContent="";$("#fDatos").classList.remove("hide");$("#fItems").classList.add("hide");$("#sRes").classList.add("hide");
+ updDatos();show("vTest")}
+function updDatos(){const e=$("#fDatos").elements,a=age(e.nac.value,e.fecha.value);
+ $("#edad").textContent=a&&a.y>=0?`Edad: ${a.y} años, ${a.m} meses`:"";
+ $("#sPadre").classList.toggle("hide",!(T.paraPadres&&a&&a.y>=0&&a.y<18))}
+$("#fDatos").addEventListener("input",updDatos);
+
+$("#fDatos").onsubmit=e=>{e.preventDefault();
+ const f=$("#fDatos").elements,err=m=>($("#dErr").textContent=m,false);
+ for(const c of campos())if(c.r&&!f[c.n].value){f[c.n].focus();return err("Completa los datos marcados con *.")}
+ const a=age(f.nac.value,f.fecha.value);if(!a||a.y<0)return err("La fecha de nacimiento no puede ser posterior a la de aplicación.");
+ if(T.edadMin!=null&&(a.y<T.edadMin||a.y>T.edadMax)&&!confirm(`La edad (${a.y} años) está fuera del rango de la prueba (${T.edadMin} a ${T.edadMax} años). ¿Continuar de todos modos?`))return;
+ if(T.paraPadres&&a.y<18&&!f.padre_nombre.value.trim()){f.padre_nombre.focus();return err("Escribe el nombre del padre, madre o tutor.")}
+ $("#dErr").textContent="";iniciar()};
+
+/* Ítems */
+function iniciar(){
+ let n=0;const ops=T.opciones;
+ $("#instr").textContent=T.instrucciones||"";
+ $("#items").innerHTML=T.bloques.map(b=>{
+  if(b.filtro){const q=b.filtro;return `<div class="filtro"><p style="font-size:14.5px;margin-bottom:12px;line-height:1.5"><b>${esc(q.texto)}</b></p><div class="opts two-o">${q.opciones.map(o=>`<label><input type="radio" name="f_${q.id}" value="${o}"><span>${o}</span></label>`).join("")}</div></div>`}
+  return `<div class="blk" ${b.dependeDe?`data-dep="${b.dependeDe}"`:""}><h3>${esc(b.titulo)}</h3>`+b.items.map(it=>{const i=n++;
+   if(T.modo==="marcar")return `<div class="item" data-i="${i}"><label class="chk"><input type="checkbox" name="i${i}" value="1"><span>${i+1}. ${esc(it)}</span></label></div>`;
+   return `<div class="item" data-i="${i}"><p>${i+1}. ${esc(it)}</p><div class="opts">${ops.map(o=>`<label><input type="radio" name="i${i}" value="${o.valor}" data-t="${esc(o.texto)}"><span>${esc(o.texto)}</span></label>`).join("")}</div></div>`}).join("")+`</div>`}).join("");
+ $("#fItems").reset();$("#tErr").textContent="";enItems=true;$(".bar").classList.toggle("hide",T.modo==="marcar");
+ $("#fDatos").classList.add("hide");$("#fItems").classList.remove("hide");upd();scrollTo(0,0)}
+const filtros=()=>{const o={};T.bloques.forEach(b=>{if(b.filtro){const r=document.querySelector(`input[name=f_${b.filtro.id}]:checked`);o[b.filtro.id]=r?r.value:""}});return o};
+function upd(){const F=filtros();let tot=0,ok=0;
+ document.querySelectorAll(".blk[data-dep]").forEach(b=>b.classList.toggle("hide",F[b.dataset.dep]==="Sí"));
+ document.querySelectorAll(".item").forEach(it=>{if(it.closest(".hide"))return;tot++;if(it.querySelector("input:checked"))ok++});
+ const nf=Object.keys(F).length;tot+=nf;ok+=Object.values(F).filter(Boolean).length;
+ $("#prog").style.width=(tot?ok/tot*100:0)+"%"}
+$("#fItems").addEventListener("change",upd);
+
+$("#fItems").onsubmit=e=>{e.preventDefault();
+ const F=filtros(),fail=(m,el)=>{$("#tErr").textContent=m;el.scrollIntoView({block:"center",behavior:"smooth"})};
+ for(const k in F)if(!F[k])return fail("Contesta la pregunta marcada en negrita.",document.querySelector(`input[name=f_${k}]`).closest(".filtro"));
+ const resp=[];
+ for(let i=0;i<T.items.length;i++){const el=document.querySelector(`.item[data-i="${i}"]`);
+  if(el.closest(".hide")){resp.push(null);continue}
+  const r=el.querySelector("input:checked");if(T.modo==="marcar"){resp.push({valor:r?1:0,texto:r?"Presente":"Ausente"});continue}
+  if(!r)return fail(`Falta contestar el ítem ${i+1}.`,el);
+  resp.push({valor:+r.value,texto:r.dataset.t})}
+ const g=Object.fromEntries(new FormData($("#fDatos"))),a=age(g.nac,g.fecha),conPadre=T.paraPadres&&a.y<18;
+ const cal=T.calificar(resp,{filtros:F,edad:a,sexo:g.sexo}),interp=T.interpretar(cal,{filtros:F,edad:a,sexo:g.sexo});
+ const txt=informe(g,a,conPadre,resp,F,cal,interp);
+ descargar(txt,g);enItems=false;$("#resTxt").textContent=txt;$("#fItems").classList.add("hide");$("#sRes").classList.remove("hide");scrollTo(0,0)};
+
+function informe(g,a,conPadre,resp,F,cal,interp){
+ const hr="=".repeat(32),L=[hr,(T.nombreCompleto||T.nombre).toUpperCase(),hr,"","1. DATOS GENERALES",
+  `Nombre: ${g.nombre}`,`Fecha de nacimiento: ${g.nac}`,`Edad: ${a.y} años, ${a.m} meses`,`Sexo: ${g.sexo}`,
+  ...(g.nivel!==undefined?[`Estudia: ${g.nivel||"—"}`,`Evaluador: ${g.evaluador}`]:[`Escolaridad/ocupación: ${g.escolaridad||"—"}`,`Aplicador: ${g.aplicador||"—"}`]),
+  `Fecha de aplicación: ${g.fecha}`];
+ if(T.edadMin!=null&&(a.y<T.edadMin||a.y>T.edadMax))L.push(`Aviso: edad fuera del rango normativo de la prueba (${T.edadMin} a ${T.edadMax} años).`);
+ if(conPadre)L.push("",`Padre/madre/tutor: ${g.padre_nombre}`,`Parentesco: ${g.padre_parentesco||"—"}`,`Edad: ${g.padre_edad||"—"}`,`Ocupación: ${g.padre_ocupacion||"—"}`);
+ L.push("","2. CALIFICACIÓN",...(cal.lineas||[`Puntaje total: ${cal.total}`]),"","3. RESPUESTAS POR ÍTEM");
+ T.bloques.forEach(b=>{if(b.filtro)L.push(`${b.filtro.texto.split("?")[0]}?: ${F[b.filtro.id]}`)});
+ resp.forEach((r,i)=>L.push(`${i+1}. ${T.items[i]}\n   → ${r?`${r.texto} (${r.valor})`:"No aplica (escala omitida)"}`));
+ L.push("","4. INTERPRETACIÓN",interp,"");return L.join("\n")}
+function descargar(txt,g){
+ const n=g.nombre.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^\w\s]/g,"").trim().replace(/\s+/g,"_");
+ const blob=new Blob(["\ufeff"+txt],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),nom=`${T.id}_${n}_${g.fecha}.txt`;
+ guardarHist(nom,blob);
+ const el=Object.assign(document.createElement("a"),{href:url,download:nom});
+ document.body.appendChild(el);el.click();el.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+
+TESTS.forEach(t=>t.items=(t.bloques||[]).flatMap(b=>b.items||[]));
+(async()=>{recuperar();
+ const U=await identidad();
+ if(U){await fijarUsuario(U.id,true);await detectarAdmin();home()}
+ else if(LOCAL){if(isIn()){await fijarUsuario("manu",false);home()}else show("vLogin")}
+ else show("vBloq")})();
+/* Actualización automática */
+const enLibre=()=>["vLogin","vBloq","vHome","vCat","vUsr","vHist"].some(v=>!$("#"+v).classList.contains("hide"));
+function aplicarPend(){if(!pend)return false;location.reload();return true}
+if("serviceWorker"in navigator){
+ const tenia=!!navigator.serviceWorker.controller;
+ navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!tenia||pend)return;
+  if(enLibre()){location.reload();return}
+  pend=true;const t=$("#toast");t.textContent="Hay una versión nueva. Se aplicará al volver al panel.";t.classList.remove("hide")});
+ addEventListener("load",()=>navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(r=>{
+  TESTS.filter(t=>t.precalentarSW).forEach(t=>navigator.serviceWorker.register(t.app.split("/")[0]+"/sw.js",{updateViaCache:"none"}).catch(()=>{}));
+  r.update();const ch=()=>{if(!document.hidden)r.update()};
+  document.addEventListener("visibilitychange",ch);addEventListener("focus",ch);setInterval(ch,10*60*1000)}))}
+</script>
+</body>
+</html>
