@@ -1,0 +1,15 @@
+@media screen{
+#waves{display:none!important}
+:root{--ink:#f3eefc;--mut:rgba(243,238,252,.7);--bg:rgba(255,255,255,.07);--card:rgba(255,255,255,.1);--acc:#aeb8ff;--line:rgba(255,255,255,.2)}
+header{background:rgba(28,18,48,.62)!important;color:#fff!important;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.15)}
+h1,h2{font-family:inherit!important}
+button,.btn{border-radius:14px;background:rgba(255,255,255,.1)}
+header button{background:transparent;border-color:rgba(255,255,255,.4)}
+button.p{background:linear-gradient(90deg,#3b1033,#4d4fd1 90%);border-color:transparent;color:#fff;font-weight:700}
+nav button{border-radius:14px 14px 0 0}
+nav button[aria-selected=true]{background:rgba(255,255,255,.16);color:#fff}
+.panel{background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border-color:rgba(255,255,255,.18);border-radius:0 0 28px 28px;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+input,textarea{background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.55);border-radius:0}
+td input{border:1px solid rgba(255,255,255,.25);border-radius:8px;background:rgba(255,255,255,.06)}
+.edad,.tot div{background:rgba(255,255,255,.08)}
+}

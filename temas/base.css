@@ -1,1 +1,8 @@
-
+/* Tema común de la plataforma (estilo "cristal" del inicio de sesión).
+   La plataforma lo aplica por encima de las pruebas; no modifica sus archivos.
+   Solo en pantalla: la impresión / PDF de cada prueba no cambia. */
+@media screen{
+html{background:radial-gradient(40% 35% at 50% 12%,#8b2a3a 0,transparent 70%),radial-gradient(45% 40% at 85% 55%,#1b1d5a 0,transparent 70%),radial-gradient(50% 40% at 55% 100%,#8d9be0 0,transparent 70%),radial-gradient(40% 40% at 5% 75%,#4a1f3a 0,transparent 70%),#1c1230!important;background-attachment:fixed!important;min-height:100%;color-scheme:dark}
+body{background:transparent!important;color:#f3eefc!important;font-family:"Montserrat","Segoe UI",system-ui,-apple-system,Roboto,sans-serif!important}
+::selection{background:rgba(141,155,255,.45)}
+}

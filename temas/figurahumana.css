@@ -1,0 +1,14 @@
+@media screen{
+:root{--bg:transparent;--card:rgba(255,255,255,.1);--tx:#f3eefc;--tx2:rgba(243,238,252,.68);--sep:rgba(255,255,255,.18);--ac:#aeb8ff;--ok:#6be3a6;--bar:rgba(28,18,48,.72)}
+.card{border-radius:28px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 14px 40px rgba(0,0,0,.3)}
+.btn{background:linear-gradient(90deg,#3b1033,#4d4fd1 90%);border-radius:18px;letter-spacing:.03em}
+.btn.g{background:rgba(255,255,255,.12);color:#cfd6ff;border:1px solid rgba(255,255,255,.2)}
+.btn.r{background:rgba(255,255,255,.12);color:#ff9aaa;border:1px solid rgba(255,255,255,.2)}
+.row small{background:rgba(255,255,255,.14)}
+.pill{background:rgba(255,107,122,.18);color:#ff9aaa}
+.rep .pill{color:#d70015}
+.badge{color:#1c1230}
+.seg{background:rgba(255,255,255,.1)}.seg button.on{background:rgba(255,255,255,.2)}
+.search{background:rgba(255,255,255,.1)}
+.tabs{border-top:1px solid rgba(255,255,255,.15)}
+}

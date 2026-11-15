@@ -1,0 +1,21 @@
+@media screen{
+:root{--ink:#f3eefc;--mut:rgba(243,238,252,.7);--bg:#1c1230;--g:#aeb8ff;--y:#e08aa0;--p:#c0455c;--ln:rgba(255,255,255,.3);--gl:rgba(255,255,255,.08);--r:36px}
+main{background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border-color:rgba(255,255,255,.18);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.top,.prog{background:rgba(28,18,48,.62)}
+button{border-radius:18px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12)}
+button:hover{background:rgba(255,255,255,.2)}
+.pri{background:linear-gradient(90deg,#3b1033,#4d4fd1 90%);border:0;font-weight:700;letter-spacing:.05em}
+.pri:hover{background:linear-gradient(90deg,#4d1642,#5f61e0 90%)}
+.sec{border-color:rgba(174,184,255,.7);color:#cfd6ff}
+.top .ghost{border-radius:99px}
+input,select{background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.55);border-radius:0;padding:10px 4px}
+input::placeholder{color:rgba(243,238,252,.7)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline-color:#aeb8ff}
+.bt button{border-radius:14px}
+.bt button[aria-pressed=true]{background:linear-gradient(90deg,#5b1b4a,#4d4fd1);border-color:rgba(255,255,255,.45);color:#fff}
+.bt button[data-v=N][aria-pressed=true]{background:linear-gradient(90deg,#7a2a44,#a5455f);border-color:rgba(255,255,255,.45);color:#fff}
+.prog div{background:linear-gradient(90deg,#c0455c,#6f78ee)}
+.miss{background:rgba(192,69,92,.28)}
+.chip.cBajo{color:#6be3a6}.chip.cLeve{color:#ffd166}
+.box{background:rgba(255,255,255,.07)}
+}
